@@ -9,14 +9,16 @@ pub const EVENTS_FILE: &str = "events.jsonl";
 pub const UNROUTED_FILE: &str = "events-unrouted.jsonl";
 
 /// Per-workspace event log: `<workspace>/.standarflow/events.jsonl`.
-#[must_use] 
+#[must_use]
 pub fn events_jsonl_path(workspace: &Path) -> PathBuf {
-    workspace.join(crate::util::STANDARFLOW_DIR).join(EVENTS_FILE)
+    workspace
+        .join(crate::util::STANDARFLOW_DIR)
+        .join(EVENTS_FILE)
 }
 
 /// Global dead-letter log for events whose workspace can't be resolved:
 /// `<home>/.standarflow/events-unrouted.jsonl`.
-#[must_use] 
+#[must_use]
 pub fn unrouted_jsonl_path() -> Option<PathBuf> {
     crate::util::home_dir().map(|h| h.join(crate::util::STANDARFLOW_DIR).join(UNROUTED_FILE))
 }

@@ -5,7 +5,10 @@ use rmcp::model::{CallToolResult, Content, ErrorData as McpError};
 use rmcp::service::RequestContext;
 use rmcp::RoleServer;
 use serde::Serialize;
-use standarflow_core::{store::{conversation, group, participant}, Connection};
+use standarflow_core::{
+    store::{conversation, group, participant},
+    Connection,
+};
 
 use crate::common::strip_unc;
 use crate::proctree;
@@ -19,7 +22,9 @@ pub(crate) fn current_conversation(conn: &Connection) -> Option<conversation::Co
         .flatten()
 }
 
-pub(crate) fn require_conversation(conn: &Connection) -> anyhow::Result<conversation::Conversation> {
+pub(crate) fn require_conversation(
+    conn: &Connection,
+) -> anyhow::Result<conversation::Conversation> {
     current_conversation(conn).ok_or_else(|| {
         anyhow!(
             "no conversation resolved — the MCP server is not running under a \
@@ -37,8 +42,10 @@ pub(crate) fn touch_participant(conn: &Connection, session_id: i64) {
 }
 
 pub(crate) fn client_name(ctx: &RequestContext<RoleServer>) -> String {
-    ctx.peer
-        .peer_info().map_or_else(|| "unknown".to_string(), |info| info.client_info.name.clone())
+    ctx.peer.peer_info().map_or_else(
+        || "unknown".to_string(),
+        |info| info.client_info.name.clone(),
+    )
 }
 
 #[allow(clippy::unnecessary_wraps)]

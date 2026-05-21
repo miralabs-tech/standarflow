@@ -1,7 +1,10 @@
 use std::path::Path;
 
 use anyhow::{anyhow, Context};
-use standarflow_core::{store::{group, session}, Connection};
+use standarflow_core::{
+    store::{group, session},
+    Connection,
+};
 
 /// Environment-variable name prefixes surfaced by the `debug env` diagnostic —
 /// the CLI `debug env` command and the `debug_env` MCP tool. One canonical set

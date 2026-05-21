@@ -6,8 +6,7 @@ use rmcp::{tool, tool_router};
 use standarflow_core::store::{conversation, focus, meta, session};
 
 use super::helpers::{
-    group_path_for, json_result, pid_is_live, require_conversation, text_result,
-    touch_participant,
+    group_path_for, json_result, pid_is_live, require_conversation, text_result, touch_participant,
 };
 use super::out::{ConversationOut, FocusEntryOut, SessionFocusedOut};
 use super::req::{
@@ -20,7 +19,9 @@ use crate::proctree;
 
 #[tool_router(router = focus_router, vis = "pub(crate)")]
 impl StandarflowMcp {
-    #[tool(description = "Pin a session as the focused session for THIS conversation. Focus is keyed on the conversation's stable id (resolved via the agent process tree), so it survives MCP server restarts. Subsequent hook-driven file changes are attributed to this session.")]
+    #[tool(
+        description = "Pin a session as the focused session for THIS conversation. Focus is keyed on the conversation's stable id (resolved via the agent process tree), so it survives MCP server restarts. Subsequent hook-driven file changes are attributed to this session."
+    )]
     async fn session_focus(
         &self,
         Parameters(req): Parameters<SessionFocusReq>,
@@ -42,7 +43,9 @@ impl StandarflowMcp {
         })
     }
 
-    #[tool(description = "Clear the focused session for a conversation. Defaults to the conversation this MCP server is bound to; pass conversation_id to clear another conversation's focus.")]
+    #[tool(
+        description = "Clear the focused session for a conversation. Defaults to the conversation this MCP server is bound to; pass conversation_id to clear another conversation's focus."
+    )]
     async fn session_unfocus(
         &self,
         Parameters(req): Parameters<SessionUnfocusReq>,
@@ -58,7 +61,9 @@ impl StandarflowMcp {
         })
     }
 
-    #[tool(description = "Return the focused session for this conversation (or an explicit conversation_id). With a focus row, confirmed=true. With none, falls back to the workspace's current session as an unconfirmed suggestion (confirmed=false) the conversation can adopt via focus_adopt. null only when there is nothing to suggest.")]
+    #[tool(
+        description = "Return the focused session for this conversation (or an explicit conversation_id). With a focus row, confirmed=true. With none, falls back to the workspace's current session as an unconfirmed suggestion (confirmed=false) the conversation can adopt via focus_adopt. null only when there is nothing to suggest."
+    )]
     async fn session_focused(
         &self,
         Parameters(req): Parameters<SessionFocusedReq>,
@@ -112,7 +117,9 @@ impl StandarflowMcp {
         })
     }
 
-    #[tool(description = "Adopt the workspace's current session as THIS conversation's focus, when it has none yet. Idempotent: a conversation that already has a focus keeps it. Meant for the new-chat bootstrap so focus carries over without naming a session.")]
+    #[tool(
+        description = "Adopt the workspace's current session as THIS conversation's focus, when it has none yet. Idempotent: a conversation that already has a focus keeps it. Meant for the new-chat bootstrap so focus carries over without naming a session."
+    )]
     async fn focus_adopt(&self) -> Result<CallToolResult, McpError> {
         let conn = self.locked();
         text_result(|| {
@@ -125,9 +132,7 @@ impl StandarflowMcp {
                 ));
             }
             let Some(sid) = meta::get_i64(&conn, meta::KEY_CURRENT_SESSION_ID)? else {
-                return Ok(
-                    "no workspace current session to adopt — focus one explicitly".into(),
-                );
+                return Ok("no workspace current session to adopt — focus one explicitly".into());
             };
             let Ok(s) = session::get(&conn, sid) else {
                 return Ok(
@@ -149,7 +154,9 @@ impl StandarflowMcp {
         })
     }
 
-    #[tool(description = "List every conversation that has a focused session — one entry per conversation. Lets a client that is not itself a conversation (e.g. an editor extension) see the whole focus map.")]
+    #[tool(
+        description = "List every conversation that has a focused session — one entry per conversation. Lets a client that is not itself a conversation (e.g. an editor extension) see the whole focus map."
+    )]
     async fn focus_list(&self) -> Result<CallToolResult, McpError> {
         let conn = self.locked();
         json_result(|| -> anyhow::Result<Vec<FocusEntryOut>> {
@@ -182,7 +189,9 @@ impl StandarflowMcp {
         })
     }
 
-    #[tool(description = "Set or clear the human-friendly label of a conversation. Pass label=null (or omit it) to clear and fall back to the derived label.")]
+    #[tool(
+        description = "Set or clear the human-friendly label of a conversation. Pass label=null (or omit it) to clear and fall back to the derived label."
+    )]
     async fn conversation_set_label(
         &self,
         Parameters(req): Parameters<ConversationSetLabelReq>,
@@ -194,7 +203,9 @@ impl StandarflowMcp {
         })
     }
 
-    #[tool(description = "Get a conversation by id, or the conversation this MCP server is bound to when id is omitted.")]
+    #[tool(
+        description = "Get a conversation by id, or the conversation this MCP server is bound to when id is omitted."
+    )]
     async fn conversation_get(
         &self,
         Parameters(req): Parameters<ConversationGetReq>,
@@ -208,7 +219,9 @@ impl StandarflowMcp {
         })
     }
 
-    #[tool(description = "List conversations (chats) known to this workspace, newest activity first. Each carries is_live (its agent process is still running). Optional active_since unix timestamp filters to recent ones.")]
+    #[tool(
+        description = "List conversations (chats) known to this workspace, newest activity first. Each carries is_live (its agent process is still running). Optional active_since unix timestamp filters to recent ones."
+    )]
     async fn conversation_list(
         &self,
         Parameters(req): Parameters<ConversationListReq>,

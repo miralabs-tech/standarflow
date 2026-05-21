@@ -121,8 +121,7 @@ pub fn template_for(provider: &str) -> Option<HookTemplate> {
 
 /// Load the embedded template, erroring uniformly when the provider is unknown.
 fn require_template(provider: &str) -> Result<HookTemplate> {
-    template_for(provider)
-        .ok_or_else(|| Error::Invalid(format!("unknown provider: {provider}")))
+    template_for(provider).ok_or_else(|| Error::Invalid(format!("unknown provider: {provider}")))
 }
 
 /// Install standarflow ingest hooks for a provider by patching the settings

@@ -43,7 +43,9 @@ impl ProviderAdapter for GenericAdapter {
             workspace_path: str_field(raw, "workspace_path"),
             transcript_path: str_field(raw, "transcript_path"),
             client_label: str_field(raw, "client_label"),
-            conversation_pid: raw.get("conversation_pid").and_then(serde_json::Value::as_i64),
+            conversation_pid: raw
+                .get("conversation_pid")
+                .and_then(serde_json::Value::as_i64),
             ts,
             raw: raw.clone(),
         })
@@ -67,9 +69,9 @@ fn parse_kind(raw: &serde_json::Value) -> Result<EventKind> {
     }
 
     // String form: a bare discriminant enriched with sibling fields.
-    let disc = kind.as_str().ok_or_else(|| {
-        Error::Invalid("generic event kind must be a string or object".into())
-    })?;
+    let disc = kind
+        .as_str()
+        .ok_or_else(|| Error::Invalid("generic event kind must be a string or object".into()))?;
     let tool = || str_field(raw, "tool").unwrap_or_else(|| "tool".to_string());
     Ok(match disc {
         "session_start" => EventKind::SessionStart,

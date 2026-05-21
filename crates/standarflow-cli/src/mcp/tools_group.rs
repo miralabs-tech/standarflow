@@ -14,7 +14,9 @@ use crate::common::resolve_group;
 
 #[tool_router(router = group_router, vis = "pub(crate)")]
 impl StandarflowMcp {
-    #[tool(description = "Return workspace state: db_path, schema_version, row counts, current_session_id, and first_run (true when no groups exist yet — extension should propose onboarding).")]
+    #[tool(
+        description = "Return workspace state: db_path, schema_version, row counts, current_session_id, and first_run (true when no groups exist yet — extension should propose onboarding)."
+    )]
     async fn workspace_info(&self) -> Result<CallToolResult, McpError> {
         let conn = self.locked();
         json_result(|| -> anyhow::Result<WorkspaceInfoOut> {
@@ -57,7 +59,9 @@ impl StandarflowMcp {
         })
     }
 
-    #[tool(description = "Coarse change-feed: report what DB rows changed strictly after `ts` (unix seconds). Returns `now` to pass back as the next `ts`, plus per-area flags and the session ids touched — so a client refreshes only the affected parts of its view instead of reloading wholesale.")]
+    #[tool(
+        description = "Coarse change-feed: report what DB rows changed strictly after `ts` (unix seconds). Returns `now` to pass back as the next `ts`, plus per-area flags and the session ids touched — so a client refreshes only the affected parts of its view instead of reloading wholesale."
+    )]
     async fn changes_since(
         &self,
         Parameters(req): Parameters<ChangesSinceReq>,
@@ -103,7 +107,9 @@ impl StandarflowMcp {
         })
     }
 
-    #[tool(description = "Create a group. Use parent_path for nesting (e.g. \"backend/auth\"). created_by is taken from the MCP client name.")]
+    #[tool(
+        description = "Create a group. Use parent_path for nesting (e.g. \"backend/auth\"). created_by is taken from the MCP client name."
+    )]
     async fn group_create(
         &self,
         Parameters(req): Parameters<GroupCreateReq>,
@@ -130,7 +136,9 @@ impl StandarflowMcp {
         })
     }
 
-    #[tool(description = "List child groups under an optional parent_path (root groups if omitted).")]
+    #[tool(
+        description = "List child groups under an optional parent_path (root groups if omitted)."
+    )]
     async fn group_list(
         &self,
         Parameters(req): Parameters<GroupListReq>,
@@ -148,7 +156,9 @@ impl StandarflowMcp {
         })
     }
 
-    #[tool(description = "Delete a group (cascades to its sessions, artefacts, file_refs and links). Files on disk are NOT removed.")]
+    #[tool(
+        description = "Delete a group (cascades to its sessions, artefacts, file_refs and links). Files on disk are NOT removed."
+    )]
     async fn group_delete(
         &self,
         Parameters(req): Parameters<GroupDeleteReq>,

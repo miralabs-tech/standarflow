@@ -46,11 +46,7 @@ fn is_agent_root(name: &str) -> bool {
 pub fn agent_root_pid() -> Option<u32> {
     *CACHED_AGENT_ROOT_PID.get_or_init(|| {
         let mut sys = System::new();
-        sys.refresh_processes_specifics(
-            ProcessesToUpdate::All,
-            true,
-            ProcessRefreshKind::new(),
-        );
+        sys.refresh_processes_specifics(ProcessesToUpdate::All, true, ProcessRefreshKind::new());
 
         let mut pid = std::process::id();
         for _ in 0..MAX_PARENT_HOPS {
@@ -78,11 +74,7 @@ pub fn conversation_pid() -> i64 {
 /// to make diagnostics actionable.
 pub fn parent_chain() -> Vec<(u32, String)> {
     let mut sys = System::new();
-    sys.refresh_processes_specifics(
-        ProcessesToUpdate::All,
-        true,
-        ProcessRefreshKind::new(),
-    );
+    sys.refresh_processes_specifics(ProcessesToUpdate::All, true, ProcessRefreshKind::new());
 
     let mut chain = Vec::new();
     let mut pid = std::process::id();
@@ -105,11 +97,7 @@ pub fn parent_chain() -> Vec<(u32, String)> {
 /// liveness changes over the server's lifetime.
 pub fn live_agent_pids() -> HashSet<u32> {
     let mut sys = System::new();
-    sys.refresh_processes_specifics(
-        ProcessesToUpdate::All,
-        true,
-        ProcessRefreshKind::new(),
-    );
+    sys.refresh_processes_specifics(ProcessesToUpdate::All, true, ProcessRefreshKind::new());
     sys.processes()
         .iter()
         .filter(|(_, p)| is_agent_root(p.name().to_string_lossy().as_ref()))

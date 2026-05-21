@@ -1,6 +1,9 @@
 use anyhow::{anyhow, Context};
 use clap::Subcommand;
-use standarflow_core::{store::{conversation, focus, group, session}, Connection};
+use standarflow_core::{
+    store::{conversation, focus, group, session},
+    Connection,
+};
 
 use crate::common::{resolve_group, resolve_session};
 use crate::proctree;
@@ -80,7 +83,10 @@ pub(crate) fn handle_focus(conn: &Connection, action: FocusCmd) -> anyhow::Resul
 }
 
 #[allow(clippy::needless_pass_by_value)]
-pub(crate) fn handle_conversation(conn: &Connection, action: ConversationCmd) -> anyhow::Result<()> {
+pub(crate) fn handle_conversation(
+    conn: &Connection,
+    action: ConversationCmd,
+) -> anyhow::Result<()> {
     match action {
         ConversationCmd::List => {
             for c in conversation::list(conn, None)? {

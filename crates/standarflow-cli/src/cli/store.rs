@@ -2,7 +2,10 @@ use std::io::Read;
 
 use anyhow::{anyhow, Context};
 use clap::Subcommand;
-use standarflow_core::{store::{group, link, session}, Connection};
+use standarflow_core::{
+    store::{group, link, session},
+    Connection,
+};
 
 use super::client_label;
 use crate::common::{resolve_group, resolve_session};

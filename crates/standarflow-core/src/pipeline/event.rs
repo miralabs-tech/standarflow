@@ -52,7 +52,7 @@ pub enum EventKind {
 
 impl EventKind {
     /// Stable string stored in the `events.event_kind` column.
-    #[must_use] 
+    #[must_use]
     pub fn discriminant(&self) -> &'static str {
         match self {
             EventKind::SessionStart => "session_start",

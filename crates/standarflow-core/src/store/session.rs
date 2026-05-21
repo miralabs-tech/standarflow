@@ -91,11 +91,7 @@ pub fn find_by_slug(conn: &Connection, group_id: i64, slug: &str) -> Result<Opti
     .map_err(Into::into)
 }
 
-pub fn latest_in_group(
-    conn: &Connection,
-    group_id: i64,
-    kind: &str,
-) -> Result<Option<Session>> {
+pub fn latest_in_group(conn: &Connection, group_id: i64, kind: &str) -> Result<Option<Session>> {
     conn.query_row(
         &format!(
             "SELECT {SELECT_COLS} FROM sessions
@@ -120,11 +116,7 @@ pub fn list_in_group(conn: &Connection, group_id: i64) -> Result<Vec<Session>> {
     Ok(rows)
 }
 
-pub fn find_by_pattern(
-    conn: &Connection,
-    group_id: i64,
-    pattern: &str,
-) -> Result<Vec<Session>> {
+pub fn find_by_pattern(conn: &Connection, group_id: i64, pattern: &str) -> Result<Vec<Session>> {
     let rows = conn
         .prepare(&format!(
             "SELECT {SELECT_COLS} FROM sessions
@@ -218,7 +210,9 @@ pub fn update(conn: &Connection, id: i64, patch: &SessionPatch<'_>) -> Result<()
     sets.push("updated_at = ?");
     values.push(Box::new(now));
     sets.push("updated_by = ?");
-    values.push(Box::new(patch.updated_by.map(std::string::ToString::to_string)));
+    values.push(Box::new(
+        patch.updated_by.map(std::string::ToString::to_string),
+    ));
 
     let sql = format!("UPDATE sessions SET {} WHERE id = ?", sets.join(", "));
     values.push(Box::new(id));

@@ -1,7 +1,10 @@
 use std::collections::HashMap;
 
 use serde::Serialize;
-use standarflow_core::{store::{conversation, file_ref, group, link, session}, Connection};
+use standarflow_core::{
+    store::{conversation, file_ref, group, link, session},
+    Connection,
+};
 
 use super::helpers::group_path_for;
 

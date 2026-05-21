@@ -19,7 +19,9 @@ use crate::common::{resolve_group, resolve_session};
 
 #[tool_router(router = session_router, vis = "pub(crate)")]
 impl StandarflowMcp {
-    #[tool(description = "Save a session (kind defaults to 'session'). Use continues_slug to chain after a previous session (auto-supersedes it). created_by is the MCP client name.")]
+    #[tool(
+        description = "Save a session (kind defaults to 'session'). Use continues_slug to chain after a previous session (auto-supersedes it). created_by is the MCP client name."
+    )]
     async fn session_save(
         &self,
         Parameters(req): Parameters<SessionSaveReq>,
@@ -56,7 +58,9 @@ impl StandarflowMcp {
         })
     }
 
-    #[tool(description = "Get a session by slug, or the latest active of the given kind (default 'session') in the group.")]
+    #[tool(
+        description = "Get a session by slug, or the latest active of the given kind (default 'session') in the group."
+    )]
     async fn session_get(
         &self,
         Parameters(req): Parameters<SessionGetReq>,
@@ -77,7 +81,9 @@ impl StandarflowMcp {
         })
     }
 
-    #[tool(description = "List sessions in a group (most recent first). Optional GLOB pattern matches slug or kind.")]
+    #[tool(
+        description = "List sessions in a group (most recent first). Optional GLOB pattern matches slug or kind."
+    )]
     async fn session_list(
         &self,
         Parameters(req): Parameters<SessionListReq>,
@@ -107,7 +113,9 @@ impl StandarflowMcp {
         })
     }
 
-    #[tool(description = "Patch-update a session. Every field is optional: body_md, kind, status, title, clear_title, parent_slug, clear_parent, new_group_path (move), new_slug (rename). Touches updated_at / updated_by.")]
+    #[tool(
+        description = "Patch-update a session. Every field is optional: body_md, kind, status, title, clear_title, parent_slug, clear_parent, new_group_path (move), new_slug (rename). Touches updated_at / updated_by."
+    )]
     async fn session_update(
         &self,
         Parameters(req): Parameters<SessionUpdateReq>,
@@ -131,9 +139,7 @@ impl StandarflowMcp {
             };
             let title = match (req.clear_title, req.title.as_deref()) {
                 (true, Some(_)) => {
-                    return Err(anyhow!(
-                        "title and clear_title=true are mutually exclusive"
-                    ))
+                    return Err(anyhow!("title and clear_title=true are mutually exclusive"))
                 }
                 (true, None) => Some(None),
                 (false, Some(t)) => Some(Some(t)),
@@ -163,7 +169,9 @@ impl StandarflowMcp {
         })
     }
 
-    #[tool(description = "Delete a session by group_path + slug. Cascades to its artefacts, file_refs and links. Files on disk are NOT removed.")]
+    #[tool(
+        description = "Delete a session by group_path + slug. Cascades to its artefacts, file_refs and links. Files on disk are NOT removed."
+    )]
     async fn session_delete(
         &self,
         Parameters(req): Parameters<SessionDeleteReq>,
@@ -177,7 +185,9 @@ impl StandarflowMcp {
         })
     }
 
-    #[tool(description = "Add a typed link between two sessions (e.g. relation = 'references', 'fixes', 'relates_to').")]
+    #[tool(
+        description = "Add a typed link between two sessions (e.g. relation = 'references', 'fixes', 'relates_to')."
+    )]
     async fn link_add(
         &self,
         Parameters(req): Parameters<LinkAddReq>,
@@ -209,7 +219,9 @@ impl StandarflowMcp {
         })
     }
 
-    #[tool(description = "List outgoing and incoming links for a session id. Each row carries a resolved `peer` (id, slug, group_path, kind, status) so callers can navigate without an extra round-trip.")]
+    #[tool(
+        description = "List outgoing and incoming links for a session id. Each row carries a resolved `peer` (id, slug, group_path, kind, status) so callers can navigate without an extra round-trip."
+    )]
     async fn link_of(
         &self,
         Parameters(req): Parameters<LinkOfReq>,
@@ -235,7 +247,9 @@ impl StandarflowMcp {
         })
     }
 
-    #[tool(description = "List the conversations that have worked in a session (audit), most recently active first.")]
+    #[tool(
+        description = "List the conversations that have worked in a session (audit), most recently active first."
+    )]
     async fn session_participants(
         &self,
         Parameters(req): Parameters<SessionParticipantsReq>,
@@ -244,7 +258,9 @@ impl StandarflowMcp {
         json_result(|| Ok(participant::list_for_session(&conn, req.session_id)?))
     }
 
-    #[tool(description = "List file changes attributed to a session (audit), most recent first. Populated automatically from provider hooks.")]
+    #[tool(
+        description = "List file changes attributed to a session (audit), most recent first. Populated automatically from provider hooks."
+    )]
     async fn session_file_changes(
         &self,
         Parameters(req): Parameters<SessionFileChangesReq>,

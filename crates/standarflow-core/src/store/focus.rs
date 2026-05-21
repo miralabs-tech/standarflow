@@ -38,11 +38,7 @@ pub fn set(conn: &Connection, conversation_id: i64, session_id: i64) -> Result<(
 /// Record a pending focus request for a conversation without an existing row.
 /// When the conversation already has a focus, this only updates the pending
 /// pointer.
-pub fn set_pending(
-    conn: &Connection,
-    conversation_id: i64,
-    pending_session_id: i64,
-) -> Result<()> {
+pub fn set_pending(conn: &Connection, conversation_id: i64, pending_session_id: i64) -> Result<()> {
     let now = now_unix();
     conn.execute(
         "INSERT INTO session_focus
@@ -161,8 +157,14 @@ mod tests {
         seed_focus(&conn, c1, s_old, 10);
         seed_focus(&conn, c2, s_new, 20);
 
-        assert_eq!(meta::get_i64(&conn, meta::KEY_CURRENT_SESSION_ID).unwrap(), None);
-        assert_eq!(backfill_current_session(&conn).expect("backfill"), Some(s_new));
+        assert_eq!(
+            meta::get_i64(&conn, meta::KEY_CURRENT_SESSION_ID).unwrap(),
+            None
+        );
+        assert_eq!(
+            backfill_current_session(&conn).expect("backfill"),
+            Some(s_new)
+        );
         assert_eq!(
             meta::get_i64(&conn, meta::KEY_CURRENT_SESSION_ID).unwrap(),
             Some(s_new)
@@ -192,6 +194,9 @@ mod tests {
         let conn = mem_db();
 
         assert_eq!(backfill_current_session(&conn).expect("backfill"), None);
-        assert_eq!(meta::get_i64(&conn, meta::KEY_CURRENT_SESSION_ID).unwrap(), None);
+        assert_eq!(
+            meta::get_i64(&conn, meta::KEY_CURRENT_SESSION_ID).unwrap(),
+            None
+        );
     }
 }

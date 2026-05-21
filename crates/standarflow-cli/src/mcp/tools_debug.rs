@@ -12,7 +12,9 @@ use crate::proctree;
 
 #[tool_router(router = debug_router, vis = "pub(crate)")]
 impl StandarflowMcp {
-    #[tool(description = "Diagnostic: dump the MCP server process state — pid, cwd, exe, args, env, agent process tree, and the resolved conversation id.")]
+    #[tool(
+        description = "Diagnostic: dump the MCP server process state — pid, cwd, exe, args, env, agent process tree, and the resolved conversation id."
+    )]
     async fn debug_env(
         &self,
         Parameters(req): Parameters<DebugEnvReq>,
@@ -44,8 +46,12 @@ impl StandarflowMcp {
 
         let out = DebugEnvOut {
             pid: std::process::id(),
-            cwd: std::env::current_dir().ok().map(|p| p.display().to_string()),
-            exe: std::env::current_exe().ok().map(|p| p.display().to_string()),
+            cwd: std::env::current_dir()
+                .ok()
+                .map(|p| p.display().to_string()),
+            exe: std::env::current_exe()
+                .ok()
+                .map(|p| p.display().to_string()),
             args: std::env::args().collect(),
             mcp_client_name,
             mcp_client_version,
