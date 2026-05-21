@@ -3,7 +3,10 @@ use std::path::{Path, PathBuf};
 
 use anyhow::anyhow;
 use clap::{Subcommand, ValueEnum};
-use standarflow_core::{pipeline::{event, hooks, ingest, tail}, Connection};
+use standarflow_core::{
+    pipeline::{event, hooks, ingest, tail},
+    Connection,
+};
 
 use crate::proctree;
 
@@ -152,7 +155,11 @@ fn hooks_root(root: Option<&Path>) -> anyhow::Result<PathBuf> {
 }
 
 #[allow(clippy::needless_pass_by_value)]
-pub(crate) fn handle_events(conn: &Connection, db_path: &Path, action: EventsCmd) -> anyhow::Result<()> {
+pub(crate) fn handle_events(
+    conn: &Connection,
+    db_path: &Path,
+    action: EventsCmd,
+) -> anyhow::Result<()> {
     match action {
         EventsCmd::Tail => {
             let workspace = db_path

@@ -16,7 +16,7 @@ pub trait ProviderAdapter {
 }
 
 /// Resolve an adapter by provider name. Returns `None` for unknown providers.
-#[must_use] 
+#[must_use]
 pub fn adapter_for(name: &str) -> Option<Box<dyn ProviderAdapter>> {
     match name {
         "claude-code" => Some(Box::new(claude_code::ClaudeCodeAdapter)),

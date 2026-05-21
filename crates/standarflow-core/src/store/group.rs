@@ -123,7 +123,9 @@ pub fn update(conn: &Connection, id: i64, patch: &GroupPatch<'_>) -> Result<()> 
     sets.push("updated_at = ?");
     values.push(Box::new(now));
     sets.push("updated_by = ?");
-    values.push(Box::new(patch.updated_by.map(std::string::ToString::to_string)));
+    values.push(Box::new(
+        patch.updated_by.map(std::string::ToString::to_string),
+    ));
 
     let sql = format!("UPDATE groups SET {} WHERE id = ?", sets.join(", "));
     values.push(Box::new(id));

@@ -154,8 +154,7 @@ pub fn find_for_session_by_path(
     .map_err(Into::into)
 }
 
-const SELECT_COLS: &str =
-    "id, session_id, path, role, source, description, created_at, created_by";
+const SELECT_COLS: &str = "id, session_id, path, role, source, description, created_at, created_by";
 
 fn map_row(row: &rusqlite::Row) -> rusqlite::Result<FileRef> {
     Ok(FileRef {

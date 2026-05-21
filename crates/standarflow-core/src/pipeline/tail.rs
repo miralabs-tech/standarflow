@@ -164,12 +164,7 @@ fn ingest_event(conn: &Connection, ev: &NormalizedEvent) -> Result<()> {
 /// tracked path that has since vanished from disk. Claude Code exposes no
 /// Delete tool, so there is no hook payload to read — the filesystem is the
 /// source of truth. Returns how many deletions were recorded.
-fn reconcile_deletes(
-    conn: &Connection,
-    session_id: i64,
-    conv_id: i64,
-    ts: i64,
-) -> Result<usize> {
+fn reconcile_deletes(conn: &Connection, session_id: i64, conv_id: i64, ts: i64) -> Result<usize> {
     let mut deleted = 0;
     for path in file_change::live_paths_for_session(conn, session_id)? {
         if Path::new(&path).exists() {

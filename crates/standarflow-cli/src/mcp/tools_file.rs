@@ -18,7 +18,9 @@ use crate::common::{canonical_path, resolve_group, resolve_session};
 
 #[tool_router(router = file_router, vis = "pub(crate)")]
 impl StandarflowMcp {
-    #[tool(description = "Attach an external file to a session, with optional role and description. source is recorded as 'manual'.")]
+    #[tool(
+        description = "Attach an external file to a session, with optional role and description. source is recorded as 'manual'."
+    )]
     async fn file_attach(
         &self,
         Parameters(req): Parameters<FileAttachReq>,
@@ -89,7 +91,9 @@ impl StandarflowMcp {
         })
     }
 
-    #[tool(description = "Re-assign the created_by of an existing file_ref to the current MCP client.")]
+    #[tool(
+        description = "Re-assign the created_by of an existing file_ref to the current MCP client."
+    )]
     async fn file_claim(
         &self,
         Parameters(req): Parameters<FileClaimReq>,
@@ -103,7 +107,9 @@ impl StandarflowMcp {
         })
     }
 
-    #[tool(description = "Delete the on-disk file AND detach the file_ref. If the file is already missing, detach still happens and file_was_missing=true is returned.")]
+    #[tool(
+        description = "Delete the on-disk file AND detach the file_ref. If the file is already missing, detach still happens and file_was_missing=true is returned."
+    )]
     async fn file_delete_with_source(
         &self,
         Parameters(req): Parameters<FileDeleteWithSourceReq>,
@@ -120,7 +126,9 @@ impl StandarflowMcp {
         })
     }
 
-    #[tool(description = "Scan a directory for files matching an extension (default 'md') and attach each as a file_ref with source 'memory_import'. Provider-agnostic.")]
+    #[tool(
+        description = "Scan a directory for files matching an extension (default 'md') and attach each as a file_ref with source 'memory_import'. Provider-agnostic."
+    )]
     async fn memory_import(
         &self,
         Parameters(req): Parameters<MemoryImportReq>,
@@ -132,8 +140,8 @@ impl StandarflowMcp {
             let group_id = resolve_group(&conn, &req.group_path)?;
             let session_id = resolve_session(&conn, group_id, &req.session_slug)?;
             let dir = Path::new(&req.dir_path);
-            let meta = std::fs::metadata(dir)
-                .with_context(|| format!("cannot stat {}", dir.display()))?;
+            let meta =
+                std::fs::metadata(dir).with_context(|| format!("cannot stat {}", dir.display()))?;
             if !meta.is_dir() {
                 return Err(anyhow!("not a directory: {}", dir.display()));
             }

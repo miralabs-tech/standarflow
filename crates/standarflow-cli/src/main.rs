@@ -15,7 +15,11 @@ use cli::hooks::{cmd_ingest, handle_events, handle_hooks, EventsCmd, HooksCmd};
 use cli::store::{handle_group, handle_link, handle_session, GroupCmd, LinkCmd, SessionCmd};
 
 #[derive(Parser)]
-#[command(name = "standarflow", version, about = "standarflow session & flow store")]
+#[command(
+    name = "standarflow",
+    version,
+    about = "standarflow session & flow store"
+)]
 struct Cli {
     #[arg(long, env = "STANDARFLOW_DB", global = true)]
     db: Option<PathBuf>,

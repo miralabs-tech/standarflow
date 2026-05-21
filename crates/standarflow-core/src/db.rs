@@ -7,9 +7,11 @@ use crate::error::Result;
 
 pub const DEFAULT_DB_FILE: &str = "standarflow.db";
 
-#[must_use] 
+#[must_use]
 pub fn default_path(workspace: &Path) -> PathBuf {
-    workspace.join(crate::util::STANDARFLOW_DIR).join(DEFAULT_DB_FILE)
+    workspace
+        .join(crate::util::STANDARFLOW_DIR)
+        .join(DEFAULT_DB_FILE)
 }
 
 pub fn open(path: &Path) -> Result<Connection> {

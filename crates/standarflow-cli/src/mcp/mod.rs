@@ -12,7 +12,7 @@ use std::sync::{Arc, Mutex};
 
 use rmcp::transport::stdio;
 use rmcp::{tool_handler, ServerHandler, ServiceExt};
-use standarflow_core::{store::focus, pipeline::tail, Connection};
+use standarflow_core::{pipeline::tail, store::focus, Connection};
 
 #[derive(Clone)]
 pub struct StandarflowMcp {

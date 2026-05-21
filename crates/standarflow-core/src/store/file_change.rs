@@ -48,11 +48,7 @@ pub fn log(conn: &Connection, new: &NewFileChange<'_>) -> Result<i64> {
     Ok(conn.last_insert_rowid())
 }
 
-pub fn list_for_session(
-    conn: &Connection,
-    session_id: i64,
-    limit: i64,
-) -> Result<Vec<FileChange>> {
+pub fn list_for_session(conn: &Connection, session_id: i64, limit: i64) -> Result<Vec<FileChange>> {
     let rows = conn
         .prepare(&format!(
             "SELECT {SELECT_COLS} FROM session_file_changes
@@ -109,7 +105,7 @@ pub fn live_paths_for_session(conn: &Connection, session_id: i64) -> Result<Vec<
 }
 
 /// Classify a file path into a coarse `kind` from its extension.
-#[must_use] 
+#[must_use]
 pub fn classify_kind(path: &str) -> &'static str {
     let ext = Path::new(path)
         .extension()
@@ -118,18 +114,15 @@ pub fn classify_kind(path: &str) -> &'static str {
         .to_ascii_lowercase();
     match ext.as_str() {
         "md" | "mdx" | "markdown" => "md",
-        "rs" | "ts" | "tsx" | "js" | "jsx" | "py" | "go" | "java" | "c" | "cpp" | "h"
-        | "hpp" | "lua" | "rb" | "sh" | "ps1" | "css" | "scss" | "html" | "vue" | "svelte" => {
-            "code"
-        }
+        "rs" | "ts" | "tsx" | "js" | "jsx" | "py" | "go" | "java" | "c" | "cpp" | "h" | "hpp"
+        | "lua" | "rb" | "sh" | "ps1" | "css" | "scss" | "html" | "vue" | "svelte" => "code",
         "json" | "toml" | "yaml" | "yml" | "ini" | "cfg" | "conf" | "lock" | "env" => "config",
         "png" | "jpg" | "jpeg" | "gif" | "svg" | "webp" | "ico" => "asset",
         _ => "other",
     }
 }
 
-const SELECT_COLS: &str =
-    "id, session_id, conversation_id, file_path, op, kind, tool_name, ts";
+const SELECT_COLS: &str = "id, session_id, conversation_id, file_path, op, kind, tool_name, ts";
 
 fn map_row(row: &rusqlite::Row) -> rusqlite::Result<FileChange> {
     Ok(FileChange {

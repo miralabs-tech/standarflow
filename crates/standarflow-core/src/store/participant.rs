@@ -42,10 +42,7 @@ pub fn list_for_session(conn: &Connection, session_id: i64) -> Result<Vec<Partic
     Ok(rows)
 }
 
-pub fn list_for_conversation(
-    conn: &Connection,
-    conversation_id: i64,
-) -> Result<Vec<Participant>> {
+pub fn list_for_conversation(conn: &Connection, conversation_id: i64) -> Result<Vec<Participant>> {
     let rows = conn
         .prepare(&format!(
             "SELECT {SELECT_COLS} FROM session_participants
