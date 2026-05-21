@@ -1,0 +1,6 @@
+{
+  "provider": "generic",
+  "settings_file": null,
+  "events": [],
+  "instructions": "The generic provider has no settings file to patch. Wire your tool to pipe one JSON event per invocation on stdin to:\n  standarflow ingest --provider generic\nEach payload must include at least `conversation_id` and `kind` (a discriminant string or an EventKind object)."
+}

@@ -1,0 +1,13 @@
+{
+  "provider": "claude-code",
+  "settings_file": "~/.claude/settings.json",
+  "local_settings_file": ".claude/settings.local.json",
+  "events": [
+    "SessionStart",
+    "UserPromptSubmit",
+    "PreToolUse",
+    "PostToolUse",
+    "Stop",
+    "SessionEnd"
+  ]
+}

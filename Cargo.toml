@@ -1,0 +1,28 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/standarflow-core",
+    "crates/standarflow-cli",
+    "crates/standarflow-overlay",
+]
+
+[workspace.package]
+edition = "2021"
+license = "MIT"
+repository = "https://github.com/miralabs-tech/standarflow"
+authors = ["sup2ak <cormier.wesley@gmail.com>"]
+rust-version = "1.91"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+pedantic = { level = "warn", priority = -1 }
+module_name_repetitions = "allow"
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = "symbols"

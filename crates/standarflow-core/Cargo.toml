@@ -1,0 +1,21 @@
+[package]
+name = "standarflow-core"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+description = "Core library for standarflow: sessions, groups, artefacts, links."
+
+[lints]
+workspace = true
+
+[dependencies]
+rusqlite = { version = "0.39.0", features = ["bundled"] }
+rusqlite_migration = "2.5.0"
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.149"
+thiserror = "2.0.18"
+
+[dev-dependencies]
