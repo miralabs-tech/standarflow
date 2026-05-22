@@ -1,5 +1,15 @@
 # standarflow
 
+<p align="center">
+  <a href="https://github.com/miralabs-tech/standarflow/releases"><img src="https://img.shields.io/badge/status-alpha-orange?style=flat-square" alt="Status: alpha"></a>
+  <a href="https://github.com/miralabs-tech/standarflow/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/miralabs-tech/standarflow/ci.yml?branch=main&label=ci&style=flat-square" alt="CI"></a>
+  <a href="https://www.rust-lang.org"><img src="https://img.shields.io/badge/built%20with-Rust-orange?style=flat-square" alt="Built with Rust"></a>
+  <a href="#quick-start"><img src="https://img.shields.io/badge/surfaces-CLI%20·%20MCP%20stdio-blue?style=flat-square" alt="Surfaces: CLI · MCP stdio"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="License: MIT"></a>
+  <a href="https://github.com/miralabs-tech/standarflow/stargazers"><img src="https://img.shields.io/github/stars/miralabs-tech/standarflow?label=stars&style=flat-square" alt="Stars"></a>
+  <a href="https://github.com/miralabs-tech/standarflow/releases"><img src="https://img.shields.io/github/downloads/miralabs-tech/standarflow/total?label=release%20downloads&style=flat-square" alt="Release downloads"></a>
+</p>
+
 **Session, artefact, link and conversation store for AI-assisted work.**
 
 The Rust core of standarflow: a local SQLite database plus the `standarflow`
